@@ -31,7 +31,7 @@ public class NameSaver : MonoBehaviour
         Names.RoboName = roboNameField.text;
         Names.WriteNamesToText();
         Debug.Log("Names saved! ID: " + Names.ID);
-        SceneManager.LoadScene("DialogView");
+        SceneManager.LoadScene("DialogView");  // 名前を保存したら教授モードへ移行
     }
 
 }

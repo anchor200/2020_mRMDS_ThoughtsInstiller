@@ -5,8 +5,10 @@ using UnityEngine;
 public class MessageSender : MonoBehaviour
 {
     public GameObject dialogMaster;
+    // ここにはDialogViewのMaster(GameObject)をアサイン
+
     DialogMaster master;
-    // ここにはDialogViewのMasterをアサイン
+
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +25,7 @@ public class MessageSender : MonoBehaviour
     
     public void OnClickProceed()
     {
+
         master.MessageSender("けん玉しようぜ");
     }
 }

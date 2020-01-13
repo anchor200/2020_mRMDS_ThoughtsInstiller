@@ -8,7 +8,7 @@ using System.IO;
 
 public static class Names
 {
-    public static string ID = "9";
+    public static string ID = "Z";
     public static string YourName = "hiroshi";
     public static string RoboName = "geminoid";
 
@@ -22,7 +22,7 @@ public static class Names
         CreateTextFile(filename, content);
     }
 
-    private static void CreateTextFile(string name, string content)
+    public static void CreateTextFile(string name, string content)
     {
         string path = Application.dataPath + "/SavedData/" + name;
         StreamWriter sw = File.CreateText(path);
