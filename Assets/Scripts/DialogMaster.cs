@@ -4,11 +4,14 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DialogMaster : MonoBehaviour
 {
     GameObject master;
     ChoiceControl choiceControl;
+    public InputField inputfield;
+    SceneDrawer sceneDrawer;
 
     System.Net.Sockets.NetworkStream ns;
     System.Net.Sockets.TcpClient tcp;
@@ -17,6 +20,9 @@ public class DialogMaster : MonoBehaviour
     public static string[] Scenes = { "ST", "TE" };
     public static int SceneNum = 0; // どのシーンにいるのか
     public static int SequenceTENum = 1; // 今シーンTEでどの遷移状態にいるのか
+
+    public static List<GameObject> SeqContainer = new List<GameObject>();
+
     // シーンの初期設定**>
 
     // Start is called before the first frame update
@@ -31,13 +37,14 @@ public class DialogMaster : MonoBehaviour
         ConstantsDic.TranScriptST = ConstantsDic.ReadCSV("000_st");
         ConstantsDic.TranScriptTE = ConstantsDic.ReadCSV("001_te");
         ConstantsDic.OnScreenTE = ConstantsDic.ReadCSV("001_te_onScreen");
+        ConstantsDic.FukidashiTE = ConstantsDic.ReadCSV("001_te_Fukidashi");
 
         // まずresources以下にあるcsvファイルをすべて読み込む**>
 
 
         master = GameObject.Find("Master");
         choiceControl = master.GetComponent<ChoiceControl>();
-
+        sceneDrawer = master.GetComponent<SceneDrawer>();
 
         // <** サーバーに接続
         string ipOrHost = "127.0.0.1";
@@ -84,6 +91,27 @@ public class DialogMaster : MonoBehaviour
                 SceneNum++;
 
 
+                // TE01以外を隠す
+                int i = 0;
+                GameObject g;
+                foreach (string[] seq in ConstantsDic.SequenceTE)
+                {
+                    if (i == 0)
+                    {
+                        g = GameObject.Find("OpinionInputField");
+                        SeqContainer.Add(g);
+                        i++;
+                        continue;
+                    }
+                    g = GameObject.Find(seq[0]);
+                    SeqContainer.Add(g);
+                    g.SetActive(false);
+                    i++;
+                }
+                // TE01だけアクティブにする！
+                SeqContainer[SequenceTENum].SetActive(true);
+
+
             }
             catch (SocketException e)
             {
@@ -119,14 +147,59 @@ public class DialogMaster : MonoBehaviour
 
     public void OnButtonProceed()
     {
+        SceneDrawer.IsInConfirmation = false;
+        string seqInputInfo = ConstantsDic.SequenceTE[SequenceTENum][2];
+        string seqProceedInfo = ConstantsDic.SequenceTE[SequenceTENum][1];
+        SeqContainer[SequenceTENum].SetActive(false);
+
+        // 進むボタンを押したときにシーンを更新する、文章を描画しなおす、選択肢ボタンを配置しなおす
+        Debug.Log("Now we are:" + Scenes[SceneNum] + SequenceTENum.ToString("D2"));
+
+        if (seqProceedInfo == "False")
+        {
+            SequenceTENum++;
+            choiceControl.PlaceChoice(Scenes[SceneNum], SequenceTENum);
+            SeqContainer[SequenceTENum].SetActive(true);
+
+            sceneDrawer.SetText();
+
+            string[] temp;
+            temp = ConstantsDic.SearchUtterance(Names.ID, Scenes[SceneNum], SequenceTENum, ConstantsDic.TranScriptTE);
+            Debug.Log(temp[3]);
+            MessageSender(ConstantsDic.FixTranscript(temp[3], Names.ID));
+
+        }
+        else
+        {
+            SceneManager.LoadScene("AllDataSave");
+        }
 
     }
 
     public void OnButtonConfirm()
     {
-        // 進むボタンを押したときにシーンを更新する、文章を描画しなおす、選択肢ボタンを配置しなおす
-        Debug.Log("Now we are:" + Scenes[SceneNum] + SequenceTENum.ToString("D2"));
-        choiceControl.PlaceChoice(Scenes[SceneNum], SequenceTENum);
+        // 確認ボタンで保存
+        string seqInputInfo = ConstantsDic.SequenceTE[SequenceTENum][2];
+        string seqProceedInfo = ConstantsDic.SequenceTE[SequenceTENum][1];
+
+        Debug.Log("SavingCandidate: " + inputfield.text);
+
+        int i = 0;
+        foreach (string[] saver in InputSaver.PlayerInputs)
+        {
+            if (saver[0] == seqInputInfo)
+            {
+                InputSaver.PlayerInputs[i][1] = inputfield.text;
+                Debug.Log("ActuallySaved" + seqInputInfo + ": " + InputSaver.PlayerInputs[i][1]);
+
+                MessageSender("%" + seqInputInfo + ": " + InputSaver.PlayerInputs[i][1]);
+
+            }
+            i++;
+        }
+        inputfield.text = "";
+        // sceneDrawer.SetText();
+
     }
 
     public void OnButtonFix()

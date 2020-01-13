@@ -34,6 +34,7 @@ public class ChoiceControl : MonoBehaviour
 
 
         choiceTransform = ChoiceField.transform;
+        choiceTransform.DetachChildren();  // 過去の子供を全員抹消
         foreach (string[] choice in ChoiceImport.CurrentChoice)
         {
             //プレハブからボタンを生成
@@ -42,7 +43,7 @@ public class ChoiceControl : MonoBehaviour
             listChoice.transform.SetParent(choiceTransform, false);
             //適当にボタンのラベルを変える
             //※ Textコンポーネントを扱うには using UnityEngine.UI; が必要
-            listChoice.transform.FindChild("Text").GetComponent<Text>().text = choice[0];
+            listChoice.transform.Find("Text").GetComponent<Text>().text = choice[0];
         }
     }
 

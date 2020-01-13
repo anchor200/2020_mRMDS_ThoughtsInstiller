@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DialogView.unity
     guid: 2a5dfa544b4e1714d905660d7b7dd1d2
+  - enabled: 1
+    path: Assets/Scenes/AllDataSave.unity
+    guid: c63e1be0ee5e944458bf9f5b7a72e306
   m_configObjects: {}

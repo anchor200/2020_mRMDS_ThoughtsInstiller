@@ -16,7 +16,8 @@ public static class ConstantsDic
     public static List<string[]> SequenceTE;
 
     // 喋らせる内容
-    public static string[] RoboOnScreen = { "こんな時、<YourName>さんなら何て答える？", "こんな風に言えばいいのかな？　（このまま発言しても違和感がないかどうかチェックしてね）" };
+    // public static string[] RoboOnScreen = { "こんな時、<YourName>さんなら何て答える？", "こんな風に言えばいいのかな？　（このまま発言しても違和感がないかどうかチェックしてね）" };
+    public static List<string[]> FukidashiTE;
     public static List<string[]> TranScriptST;
     public static List<string[]> TranScriptTE;
 
@@ -91,9 +92,14 @@ public static class ConstantsDic
 
         Str = Str.Replace("<YourName>", Names.YourName).Replace("<RoboName>", Names.RoboName);
 
-        Str = Regex.Replace(Str, @"(?<=\G.{27}(?!$))|\n", "\n");//Environment.NewLine);
+        //Str = Regex.Replace(Str, @"(?<=\G.{27}(?!$))|\n", "\n");//Environment.NewLine);
 
+        return Str;
+    }
 
+    public static string FixTranscriptLineWidth(string Str)
+    {
+        Str = Regex.Replace(Str, @"(?<=\G.{26}(?!$))|\n", "\n");//Environment.NewLine);
         return Str;
     }
 

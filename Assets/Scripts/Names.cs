@@ -16,7 +16,7 @@ public static class Names
     public static void WriteNamesToText()
     {
         string filename;
-        filename = "userProf" + ID + ".txt";
+        filename = "userProf" + ID + YourName + ".txt";
         string content;
         content = ID + "," + YourName + ";" + RoboName;
         CreateTextFile(filename, content);

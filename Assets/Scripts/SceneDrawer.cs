@@ -16,12 +16,21 @@ public class SceneDrawer : MonoBehaviour
 
 
     // ロボットが画面上でいうこと
-    public Text RoboQuing;
-    public Text RoboConfirm;
 
     // 各遷移状況で画面に表示されるセリフを格納するもの
+    public Text textTE01no1;
     public Text textTE02no1;
     public Text textTE02no2;
+    public Text textTE03no1;
+    public Text textTE03no2;
+    public Text textTE04no1;
+    public Text textTE05no1;
+    public Text textTE05no2;
+    public Text textTE05no3;
+    public Text textTE06no1;
+    public Text textTE07no1;
+    public Text Fukidashi;
+    public Text FukidashiConfirm;
 
 
     public static bool IsInConfirmation; // 確認ウィンドウを出してるかどうか
@@ -31,12 +40,28 @@ public class SceneDrawer : MonoBehaviour
     void Start()
     {
         IsInConfirmation = false;
+        this.SetText();
 
-        RoboQuing.text = ConstantsDic.RoboOnScreen[0].Replace("<YourName>", Names.YourName);
-        RoboConfirm.text = ConstantsDic.RoboOnScreen[1];
+    }
 
-        textTE02no1.text = ConstantsDic.FixTranscript(SearchLineOnScreen("TE02", "0", ConstantsDic.OnScreenTE)[3], Names.ID);
-        textTE02no2.text = ConstantsDic.FixTranscript(SearchLineOnScreen("TE02", "1", ConstantsDic.OnScreenTE)[3], Names.ID);
+    public void SetText()
+    {
+        // RoboQuing.text = ConstantsDic.RoboOnScreen[0].Replace("<YourName>", Names.YourName);
+        // RoboConfirm.text = ConstantsDic.RoboOnScreen[1];
+
+        textTE01no1.text = ConstantsDic.FixTranscript(ConstantsDic.SearchUtterance(Names.ID, DialogMaster.Scenes[DialogMaster.SceneNum], 1, ConstantsDic.TranScriptTE)[2], Names.ID);
+        textTE02no1.text = ConstantsDic.FixTranscriptLineWidth(ConstantsDic.FixTranscript(SearchLineOnScreen("TE02", "0", ConstantsDic.OnScreenTE)[3], Names.ID));
+        textTE02no2.text = ConstantsDic.FixTranscriptLineWidth(ConstantsDic.FixTranscript(SearchLineOnScreen("TE02", "1", ConstantsDic.OnScreenTE)[3], Names.ID));
+        textTE03no1.text = ConstantsDic.FixTranscriptLineWidth(ConstantsDic.FixTranscript(SearchLineOnScreen("TE03", "0", ConstantsDic.OnScreenTE)[3], Names.ID));
+        textTE03no2.text = ConstantsDic.FixTranscriptLineWidth(ConstantsDic.FixTranscript(SearchLineOnScreen("TE03", "1", ConstantsDic.OnScreenTE)[3], Names.ID));
+        textTE04no1.text = ConstantsDic.FixTranscriptLineWidth(ConstantsDic.FixTranscript(SearchLineOnScreen("TE04", "0", ConstantsDic.OnScreenTE)[3], Names.ID));
+        textTE05no1.text = ConstantsDic.FixTranscriptLineWidth(ConstantsDic.FixTranscript(SearchLineOnScreen("TE05", "0", ConstantsDic.OnScreenTE)[3], Names.ID));
+        textTE05no2.text = ConstantsDic.FixTranscriptLineWidth(ConstantsDic.FixTranscript(SearchLineOnScreen("TE05", "1", ConstantsDic.OnScreenTE)[3], Names.ID));
+        textTE05no3.text = ConstantsDic.FixTranscriptLineWidth(ConstantsDic.FixTranscript(SearchLineOnScreen("TE05", "2", ConstantsDic.OnScreenTE)[3], Names.ID));
+        textTE06no1.text = ConstantsDic.FixTranscriptLineWidth(ConstantsDic.FixTranscript(SearchLineOnScreen("TE06", "0", ConstantsDic.OnScreenTE)[3], Names.ID));
+        textTE07no1.text = ConstantsDic.FixTranscript(ConstantsDic.SearchUtterance(Names.ID, DialogMaster.Scenes[DialogMaster.SceneNum], 7, ConstantsDic.TranScriptTE)[2], Names.ID);
+        Fukidashi.text = ConstantsDic.FixTranscript(SearchFukidashi("TE" + DialogMaster.SequenceTENum.ToString("D2"), ConstantsDic.FukidashiTE)[1], Names.ID).Replace("#", "\n");
+        FukidashiConfirm.text = ConstantsDic.FixTranscript(SearchFukidashi("TE" + DialogMaster.SequenceTENum.ToString("D2"), ConstantsDic.FukidashiTE)[2], Names.ID).Replace("#", "\n");
     }
 
     // Update is called once per frame
@@ -83,6 +108,18 @@ public class SceneDrawer : MonoBehaviour
                 {
                     return c;
                 }
+            }
+        }
+        return data[0];
+    }
+
+    private string[] SearchFukidashi(string Sequence, List<string[]> data)
+    {
+        foreach (string[] c in data)
+        {
+            if (c[0] == Sequence)
+            {
+                return c;
             }
         }
         return data[0];
