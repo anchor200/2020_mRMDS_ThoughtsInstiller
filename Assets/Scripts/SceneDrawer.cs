@@ -78,7 +78,7 @@ public class SceneDrawer : MonoBehaviour
         {
             if (ConfirmWindow.activeSelf == false)
             {
-                if (TargetInputField.text.Length > 5 && TargetInputField.text.Length < 120 )
+                if (TargetInputField.text.Length > 5 && TargetInputField.text.Length <= 120 )
                 {
                     ConfirmWindow.SetActive(true);
                 }

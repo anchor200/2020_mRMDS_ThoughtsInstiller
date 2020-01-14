@@ -18,7 +18,7 @@ public static class Names
         string filename;
         filename = "userProf" + ID + YourName + ".txt";
         string content;
-        content = ID + "," + YourName + ";" + RoboName;
+        content = ID + "," + YourName + "," + RoboName;
         CreateTextFile(filename, content);
     }
 

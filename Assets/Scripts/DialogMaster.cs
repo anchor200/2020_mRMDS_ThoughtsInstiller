@@ -28,8 +28,9 @@ public class DialogMaster : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // <**まずresources以下にあるcsvファイルをすべて読み込む
+        // <**まずresources以下にあるcsvファイルをすべて読み込む  あとでPCの方だけに変えておこう
         ConstantsDic.commUNetworkSettings = ConstantsDic.ReadCSV("network_setting");
+        ConstantsDic.MNetworkSettings = ConstantsDic.ReadCSV("network_to_M");
 
         // 発話の読み込み
         ConstantsDic.mainClaims = ConstantsDic.ReadCSV("main_claims");
@@ -49,77 +50,72 @@ public class DialogMaster : MonoBehaviour
         // <** サーバーに接続
         string ipOrHost = "127.0.0.1";
         int port = 1000;
-        for (int i = 0; i < 6; i++)
+
+        ipOrHost = ConstantsDic.MNetworkSettings[0][0];
+        port = int.Parse(ConstantsDic.MNetworkSettings[0][1]);
+
+        /*for (int i = 0; i < 6; i++)
         {
             if (ConstantsDic.commUNetworkSettings[i][0] == Names.ID)
             {
                 ipOrHost = ConstantsDic.commUNetworkSettings[i][1];
                 port = int.Parse(ConstantsDic.commUNetworkSettings[i][2]);
             }
-        }
+        }*/
 
-        if (port == 0)
+
+        //TcpClientを作成し、サーバーと接続
+        try
         {
-            SceneManager.LoadScene("InPutName");
-            // 間違ったIDを入れたらもう一度入れ直し
-        }
-        else
-        {
-            //TcpClientを作成し、サーバーと接続
-            try
+            tcp = new System.Net.Sockets.TcpClient(ipOrHost, port);
+            Debug.Log("サーバー({0}:{1})と接続しました。" +
+                ((System.Net.IPEndPoint)tcp.Client.RemoteEndPoint).Address + "," +
+                ((System.Net.IPEndPoint)tcp.Client.RemoteEndPoint).Port + "," +
+                ((System.Net.IPEndPoint)tcp.Client.LocalEndPoint).Address + "," +
+                ((System.Net.IPEndPoint)tcp.Client.LocalEndPoint).Port);
+
+            //NetworkStreamを取得
+            ns = tcp.GetStream();
+
+            //接続出来たらロボットが初めの挨拶をする
+            Debug.Log("初期化:" + Scenes[SceneNum] + SequenceTENum.ToString("D2"));
+            string[] temp;
+            temp = ConstantsDic.SearchUtterance(Names.ID, Scenes[SceneNum], 1, ConstantsDic.TranScriptST);
+            MessageSender(ConstantsDic.FixTranscript(temp[3], Names.ID));
+
+            SceneNum++;
+
+
+            // TE01以外を隠す
+            int i = 0;
+            GameObject g;
+            foreach (string[] seq in ConstantsDic.SequenceTE)
             {
-                // <**テスト用！後で消します
-                ipOrHost = "127.0.0.1";
-                port = 1000;
-                // テスト用！後で消します**>
-                tcp = new System.Net.Sockets.TcpClient(ipOrHost, port);
-                Debug.Log("サーバー({0}:{1})と接続しました。" +
-                    ((System.Net.IPEndPoint)tcp.Client.RemoteEndPoint).Address + "," +
-                    ((System.Net.IPEndPoint)tcp.Client.RemoteEndPoint).Port + "," +
-                    ((System.Net.IPEndPoint)tcp.Client.LocalEndPoint).Address + "," +
-                    ((System.Net.IPEndPoint)tcp.Client.LocalEndPoint).Port);
-
-                //NetworkStreamを取得
-                ns = tcp.GetStream();
-
-                //接続出来たらロボットが初めの挨拶をする
-                Debug.Log("初期化:" + Scenes[SceneNum] + SequenceTENum.ToString("D2"));
-                string[] temp;
-                temp = ConstantsDic.SearchUtterance(Names.ID, Scenes[SceneNum], 1, ConstantsDic.TranScriptST);
-                MessageSender(ConstantsDic.FixTranscript(temp[3], Names.ID));
-
-                SceneNum++;
-
-
-                // TE01以外を隠す
-                int i = 0;
-                GameObject g;
-                foreach (string[] seq in ConstantsDic.SequenceTE)
+                if (i == 0)
                 {
-                    if (i == 0)
-                    {
-                        g = GameObject.Find("OpinionInputField");
-                        SeqContainer.Add(g);
-                        i++;
-                        continue;
-                    }
-                    g = GameObject.Find(seq[0]);
+                    g = GameObject.Find("OpinionInputField");
                     SeqContainer.Add(g);
-                    g.SetActive(false);
                     i++;
+                    continue;
                 }
-                // TE01だけアクティブにする！
-                SeqContainer[SequenceTENum].SetActive(true);
-
-
+                g = GameObject.Find(seq[0]);
+                SeqContainer.Add(g);
+                g.SetActive(false);
+                i++;
             }
-            catch (SocketException e)
-            {
-                Debug.Log("接続に失敗しました");
-                SceneManager.LoadScene("InPutName");
-            }
+            // TE01だけアクティブにする！
+            SeqContainer[SequenceTENum].SetActive(true);
+
 
         }
+        catch (SocketException e)
+        {
+            Debug.Log("接続に失敗しました");
+            this.Start();
+            //SceneManager.LoadScene("InPutName");
+        }
+
+
         // サーバーに接続**>
 
 

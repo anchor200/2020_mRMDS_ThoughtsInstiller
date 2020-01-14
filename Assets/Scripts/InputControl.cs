@@ -7,6 +7,7 @@ public class InputControl : MonoBehaviour
 {
     public InputField TargetInputField;
     public Text TextToConfirm;
+    public Text LengthCount;
 
     void Start()
     {
@@ -28,6 +29,11 @@ public class InputControl : MonoBehaviour
         // 確認ウィンドウを出す。
         SceneDrawer.IsInConfirmation = true;
         TextToConfirm.text = TargetInputField.text;
+    }
+
+    public void OnValueChange()
+    {
+        LengthCount.text = TargetInputField.text.Length + "文字 (最小6字、最大120字)";
     }
 
 }

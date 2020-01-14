@@ -1,14 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using UnityEngine;
-using System.IO;
+using System.Text.RegularExpressions;
+using System.IO; //System.IO.FileInfo, System.IO.StreamReader, System.IO.StreamWriter
+using System; //Exception
+using System.Text;
 
 public static class ConstantsDic
 {
     // CommUに接続するときに使うIPアドレス
     public static List<string[]> commUNetworkSettings;
-    
+    // 母艦とのアドレス　上のこみゅーのは使わない
+    public static List<string[]> MNetworkSettings;
+
     // ロボットのメインの意見
     public static List<string[]> mainClaims;
 
@@ -29,6 +33,28 @@ public static class ConstantsDic
     {
         List<string[]> tempList = new List<string[]>();
 
+        FileInfo fi = new FileInfo(Application.dataPath + "/ImportData/PRESET/" + filename + ".csv");
+        try
+        {
+            StreamReader sr = new StreamReader(fi.OpenRead(), Encoding.UTF8);
+
+            while (sr.Peek() != -1)
+            {
+                string line = sr.ReadLine();
+                tempList.Add(line.Split(','));
+                // Debug.Log(line);
+            }
+        }
+        catch (Exception e)
+        {
+            string[] err = { "新春シャンソンショー" };
+            tempList.Add(err);
+        }
+
+        return tempList;
+
+        /*List<string[]> tempList = new List<string[]>();
+
         TextAsset csvFile;
         csvFile = Resources.Load(filename) as TextAsset; // Resouces下のCSV読み込み
         // Debug.Log(csvFile.text);
@@ -44,7 +70,7 @@ public static class ConstantsDic
 
         // tempList[行][列]を指定して値を自由に取り出せる
         
-        return tempList;
+        return tempList;*/
     }
 
     public static string[] SearchUtterance(string YourID, string scene, int sequence, List<string[]> data)

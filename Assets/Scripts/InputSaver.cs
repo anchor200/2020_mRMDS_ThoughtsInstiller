@@ -37,7 +37,7 @@ public static class InputSaver
             {
                 content += "\n";
             }
-            content += line[0] + ":" + line[1];
+            content += line[0] + "," + line[1];
             i++;
         }
 
