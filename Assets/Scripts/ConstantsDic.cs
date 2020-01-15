@@ -33,7 +33,7 @@ public static class ConstantsDic
     {
         List<string[]> tempList = new List<string[]>();
 
-        FileInfo fi = new FileInfo(Application.dataPath + "/ImportData/PRESET/" + filename + ".csv");
+        FileInfo fi = new FileInfo(Application.dataPath + "/ImportData/" + filename + ".csv");
         try
         {
             StreamReader sr = new StreamReader(fi.OpenRead(), Encoding.UTF8);

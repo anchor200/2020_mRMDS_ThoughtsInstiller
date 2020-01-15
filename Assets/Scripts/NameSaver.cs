@@ -6,14 +6,15 @@ using UnityEngine.UI;
 
 public class NameSaver : MonoBehaviour
 {
-    public InputField IDField;
+    // public InputField IDField;
+    public Dropdown IDField;
     public InputField yourNameField;
     public InputField roboNameField;
 
     // Start is called before the first frame update
     void Start()
     {
-        IDField = IDField.GetComponent<InputField>();
+        IDField = IDField.GetComponent<Dropdown>();
         yourNameField = yourNameField.GetComponent<InputField>();
         roboNameField = roboNameField.GetComponent<InputField>();
     }
@@ -26,7 +27,7 @@ public class NameSaver : MonoBehaviour
 
     public void OnClickConfirm()
     {
-        Names.ID = IDField.text;
+        Names.ID = IDField.captionText.text;
         Names.YourName = yourNameField.text;
         Names.RoboName = roboNameField.text;
         Names.WriteNamesToText();

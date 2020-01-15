@@ -29,16 +29,16 @@ public class DialogMaster : MonoBehaviour
     void Start()
     {
         // <**まずresources以下にあるcsvファイルをすべて読み込む  あとでPCの方だけに変えておこう
-        ConstantsDic.commUNetworkSettings = ConstantsDic.ReadCSV("network_setting");
-        ConstantsDic.MNetworkSettings = ConstantsDic.ReadCSV("network_to_M");
+        ConstantsDic.commUNetworkSettings = ConstantsDic.ReadCSV("PRESET/network_setting");
+        ConstantsDic.MNetworkSettings = ConstantsDic.ReadCSV("PRESET/network_to_M");
 
         // 発話の読み込み
-        ConstantsDic.mainClaims = ConstantsDic.ReadCSV("main_claims");
-        ConstantsDic.SequenceTE = ConstantsDic.ReadCSV("001_te_sequence");
-        ConstantsDic.TranScriptST = ConstantsDic.ReadCSV("000_st");
-        ConstantsDic.TranScriptTE = ConstantsDic.ReadCSV("001_te");
-        ConstantsDic.OnScreenTE = ConstantsDic.ReadCSV("001_te_onScreen");
-        ConstantsDic.FukidashiTE = ConstantsDic.ReadCSV("001_te_Fukidashi");
+        ConstantsDic.mainClaims = ConstantsDic.ReadCSV("LOVE/main_claims");
+        ConstantsDic.SequenceTE = ConstantsDic.ReadCSV("PRESET/001_te_sequence");
+        ConstantsDic.TranScriptST = ConstantsDic.ReadCSV("PRESET/000_st");
+        ConstantsDic.TranScriptTE = ConstantsDic.ReadCSV("PRESET/001_te");
+        ConstantsDic.OnScreenTE = ConstantsDic.ReadCSV("PRESET/001_te_onScreen");
+        ConstantsDic.FukidashiTE = ConstantsDic.ReadCSV("PRESET/001_te_Fukidashi");
 
         // まずresources以下にあるcsvファイルをすべて読み込む**>
 
@@ -79,11 +79,19 @@ public class DialogMaster : MonoBehaviour
 
             //接続出来たらロボットが初めの挨拶をする
             Debug.Log("初期化:" + Scenes[SceneNum] + SequenceTENum.ToString("D2"));
+
+            MessageSender("<ID>:" + Names.ID + "," + Names.YourName);
+
             string[] temp;
             temp = ConstantsDic.SearchUtterance(Names.ID, Scenes[SceneNum], 1, ConstantsDic.TranScriptST);
-            MessageSender(ConstantsDic.FixTranscript(temp[3], Names.ID));
+            string prefix = "<Command>:" + Names.ID + "," + temp[0] + ",";
+            MessageSender(prefix + ConstantsDic.FixTranscript(temp[3], Names.ID));
 
             SceneNum++;
+
+            temp = ConstantsDic.SearchUtterance(Names.ID, Scenes[SceneNum], 1, ConstantsDic.TranScriptTE);
+            prefix = "<Command>:" + Names.ID + "," + temp[0] + ",";
+            MessageSender(prefix + ConstantsDic.FixTranscript(temp[3], Names.ID));
 
 
             // TE01以外を隠す
@@ -162,7 +170,8 @@ public class DialogMaster : MonoBehaviour
             string[] temp;
             temp = ConstantsDic.SearchUtterance(Names.ID, Scenes[SceneNum], SequenceTENum, ConstantsDic.TranScriptTE);
             Debug.Log(temp[3]);
-            MessageSender(ConstantsDic.FixTranscript(temp[3], Names.ID));
+            string prefix = "<Command>:" + Names.ID + "," + temp[0] + ",";
+            MessageSender(prefix + ConstantsDic.FixTranscript(temp[3], Names.ID));
 
         }
         else
@@ -188,7 +197,7 @@ public class DialogMaster : MonoBehaviour
                 InputSaver.PlayerInputs[i][1] = inputfield.text;
                 Debug.Log("ActuallySaved" + seqInputInfo + ": " + InputSaver.PlayerInputs[i][1]);
 
-                MessageSender("%" + seqInputInfo + ": " + InputSaver.PlayerInputs[i][1]);
+                MessageSender("%" + Names.ID + "%" + seqInputInfo + ":" + InputSaver.PlayerInputs[i][1]);
 
             }
             i++;

@@ -18,6 +18,7 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.Button
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.ContentSizeFitter
+    - UnityEngine.UI.Dropdown
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
     - UnityEngine.UI.InputField
@@ -25,6 +26,7 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.ScrollRect
     - UnityEngine.UI.Scrollbar
     - UnityEngine.UI.Text
+    - UnityEngine.UI.Toggle
     - UnityEngine.UI.VerticalLayoutGroup
   sceneClasses:
     Assets/Scenes/AllDataSave.unity:
@@ -169,9 +171,15 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 9836}
     - Class: 114
+      Script: {instanceID: 9838}
+    - Class: 114
       Script: {instanceID: 9876}
     - Class: 114
+      Script: {instanceID: 10168}
+    - Class: 114
       Script: {instanceID: 10258}
+    - Class: 114
+      Script: {instanceID: 10430}
     - Class: 114
       Script: {instanceID: 10616}
     - Class: 114
@@ -179,7 +187,11 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11078}
     - Class: 114
+      Script: {instanceID: 11422}
+    - Class: 114
       Script: {instanceID: 11432}
+    - Class: 114
+      Script: {instanceID: 11448}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -211,7 +223,7 @@ ScriptsOnlyBuild:
     className: TMP_SelectionCaret
   - hash:
       serializedVersion: 2
-      Hash: 19f1302155f0c901ca6ab0ed6302ac5c
+      Hash: 126660e40c877412b545b3039df82268
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: NameSaver
@@ -670,4 +682,4 @@ ScriptsOnlyBuild:
   - Assets/Scenes/InputName.unity
   - Assets/Scenes/DialogView.unity
   - Assets/Scenes/AllDataSave.unity
-  playerPath: C:/Users/taiwajikken/Desktop/exp/ThoughtsInstiller.exe
+  playerPath: "C:/Users/taiwajikken/Desktop/\u5B9F\u9A13\u7528/exp/ThoughtsInstiller.exe"
