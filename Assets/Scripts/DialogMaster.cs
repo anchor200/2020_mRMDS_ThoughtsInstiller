@@ -80,7 +80,26 @@ public class DialogMaster : MonoBehaviour
             //接続出来たらロボットが初めの挨拶をする
             Debug.Log("初期化:" + Scenes[SceneNum] + SequenceTENum.ToString("D2"));
 
-            MessageSender("<ID>:" + Names.ID + "," + Names.YourName);
+            MessageSender("<ID>:" + Names.ID + "," + Names.YourName + "," + Names.RoboName);
+
+            int k = 0;
+            string mainclaimer = "<MainClaim>:";
+            foreach (string[] clm in ConstantsDic.mainClaims)
+            {
+
+                if (k == 0)
+                {
+                    mainclaimer += "<ID>,<MainClaim>,<Argument>,<Point>,<Relation>;";
+                }
+                else
+                {
+                    mainclaimer += string.Join(",", clm) + ";";
+                }
+                k++;
+            }
+            mainclaimer = mainclaimer.Remove(mainclaimer.Length - 1);
+
+            MessageSender(mainclaimer);
 
             string[] temp;
             temp = ConstantsDic.SearchUtterance(Names.ID, Scenes[SceneNum], 1, ConstantsDic.TranScriptST);
