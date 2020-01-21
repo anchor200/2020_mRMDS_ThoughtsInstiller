@@ -1,0 +1,5 @@
+<Example>,aaaaaaaaaaaaaaaa
+<Detail>,aaaaaaaaaa
+<Refute>,aaaaaaaaaaa
+<Rerefu>,vvvvvvvvvvvv
+<Perspec>,cccccccccccccc

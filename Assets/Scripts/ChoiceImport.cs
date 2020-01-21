@@ -8,7 +8,7 @@ using System.Text;
 
 public static class ChoiceImport
 {
-    public static string TOPIC = "LOVE";
+    public static string TOPIC = "TOPICS";
     public static List<string[]> CurrentChoice;
 
 

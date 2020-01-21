@@ -9,11 +9,18 @@ public class InputControl : MonoBehaviour
     public Text TextToConfirm;
     public Text LengthCount;
 
+    GameObject master;
+    SceneDrawer sceneDrawer;
+
     void Start()
     {
         TargetInputField.text = "";
         // TargetInputField.placeholder.GetComponent<Text>().text = "プレースフォルダ";
         TextToConfirm.text = "                      ";
+
+        master = GameObject.Find("Master");
+        sceneDrawer = master.GetComponent<SceneDrawer>();
+
     }
 
     public void AddText(Text TargetInput)  // ボタンを押したときとかに外から呼び出す
@@ -28,6 +35,7 @@ public class InputControl : MonoBehaviour
         // 確定ボタンを押したときに呼ばれる
         // 確認ウィンドウを出す。
         SceneDrawer.IsInConfirmation = true;
+        sceneDrawer.SetText();
         TextToConfirm.text = TargetInputField.text;
     }
 

@@ -1,0 +1,5 @@
+推移状態,話者,表示,発話
+ST01,A,ぼくの名前は<RoboName>って言います。<YourName>さん、よろしくね。,ぼくの名前は<RoboName>って言います。<YourName>さん、よろしくね。
+ST01,B,<YourName>さん、今日はよろしくね。ボクの名前は<RoboName>です。,<YourName>さん、今日はよろしくね。ボクの名前は<RoboName>です。
+ST01,C,ぼくは<RoboName>といいます。<YourName>さん、よろしくお願いします。,ぼくは<RoboName>といいます。<YourName>さん、よろしくお願いします。
+ST01,D,はじめまして、<YourName>さん。ボクのことは<RoboName>って呼んでね。,はじめまして、<YourName>さん。ボクのことは<RoboName>って呼んでね。

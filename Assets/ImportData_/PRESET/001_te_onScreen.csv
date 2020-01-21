@@ -1,0 +1,17 @@
+推移状態,番号,話者,表示
+TE02,0,S,<MainClaim>と思う。
+TE02,1,P,えっと、少し具体的に説明してもらえませんか？
+TE02,2,S,<InPutForm>
+TE03,0,S,<MainClaim>と思う。
+TE03,1,S,どうして<Argument>と考えるのか、もう少し詳しく説明してください。
+TE03,2,S,<InPutForm>
+TE04,0,S,ぼくは<MainClaim>と考えてるんだけど、何か反論してください。
+TE04,1,P,でもさ
+TE04,2,P,<InPutForm>
+TE05,0,S,<MainClaim>と思う。
+TE05,1,P,<Refute>
+TE05,2,S,そうは言うけど、（この後に続ける）
+TE05,3,S,<InPutForm>
+TE06,0,S,もう少しいろいろな視点から考えたいな。
+TE06,1,P,もう少しいろいろな視点から考えたいな。
+TE06,1,S,<InPutForm>

@@ -18,7 +18,7 @@ public class SceneDrawer : MonoBehaviour
     // ロボットが画面上でいうこと
 
     // 各遷移状況で画面に表示されるセリフを格納するもの
-    public Text textTE01no1;
+    /*public Text textTE01no1;
     public Text textTE02no1;
     public Text textTE02no2;
     public Text textTE03no1;
@@ -28,9 +28,9 @@ public class SceneDrawer : MonoBehaviour
     public Text textTE05no2;
     public Text textTE05no3;
     public Text textTE06no1;
-    public Text textTE07no1;
+    public Text textTE07no1;*/
     public Text Fukidashi;
-    public Text FukidashiConfirm;
+    //public Text FukidashiConfirm;
 
 
     public static bool IsInConfirmation; // 確認ウィンドウを出してるかどうか
@@ -49,7 +49,7 @@ public class SceneDrawer : MonoBehaviour
         // RoboQuing.text = ConstantsDic.RoboOnScreen[0].Replace("<YourName>", Names.YourName);
         // RoboConfirm.text = ConstantsDic.RoboOnScreen[1];
 
-        textTE01no1.text = ConstantsDic.FixTranscript(ConstantsDic.SearchUtterance(Names.ID, DialogMaster.Scenes[DialogMaster.SceneNum], 1, ConstantsDic.TranScriptTE)[2], Names.ID);
+        /*textTE01no1.text = ConstantsDic.FixTranscript(ConstantsDic.SearchUtterance(Names.ID, DialogMaster.Scenes[DialogMaster.SceneNum], 1, ConstantsDic.TranScriptTE)[2], Names.ID);
         textTE02no1.text = ConstantsDic.FixTranscriptLineWidth(ConstantsDic.FixTranscript(SearchLineOnScreen("TE02", "0", ConstantsDic.OnScreenTE)[3], Names.ID));
         textTE02no2.text = ConstantsDic.FixTranscriptLineWidth(ConstantsDic.FixTranscript(SearchLineOnScreen("TE02", "1", ConstantsDic.OnScreenTE)[3], Names.ID));
         textTE03no1.text = ConstantsDic.FixTranscriptLineWidth(ConstantsDic.FixTranscript(SearchLineOnScreen("TE03", "0", ConstantsDic.OnScreenTE)[3], Names.ID));
@@ -61,7 +61,12 @@ public class SceneDrawer : MonoBehaviour
         textTE06no1.text = ConstantsDic.FixTranscriptLineWidth(ConstantsDic.FixTranscript(SearchLineOnScreen("TE06", "0", ConstantsDic.OnScreenTE)[3], Names.ID));
         textTE07no1.text = ConstantsDic.FixTranscript(ConstantsDic.SearchUtterance(Names.ID, DialogMaster.Scenes[DialogMaster.SceneNum], 7, ConstantsDic.TranScriptTE)[2], Names.ID);
         Fukidashi.text = ConstantsDic.FixTranscript(SearchFukidashi("TE" + DialogMaster.SequenceTENum.ToString("D2"), ConstantsDic.FukidashiTE)[1], Names.ID).Replace("#", "\n");
-        FukidashiConfirm.text = ConstantsDic.FixTranscript(SearchFukidashi("TE" + DialogMaster.SequenceTENum.ToString("D2"), ConstantsDic.FukidashiTE)[2], Names.ID).Replace("#", "\n");
+        FukidashiConfirm.text = ConstantsDic.FixTranscript(SearchFukidashi("TE" + DialogMaster.SequenceTENum.ToString("D2"), ConstantsDic.FukidashiTE)[2], Names.ID).Replace("#", "\n");*/
+        Fukidashi.text = ConstantsDic.FixTranscript(ConstantsDic.SearchUtterance(Names.ID, DialogMaster.Scenes[DialogMaster.SceneNum], DialogMaster.SequenceTENum, ConstantsDic.TranScriptTE)[2], Names.ID).Replace("#", "\n");
+        if (IsInConfirmation == true)
+        {
+            Fukidashi.text = ConstantsDic.FixTranscript(SearchFukidashi("TE" + DialogMaster.SequenceTENum.ToString("D2"), ConstantsDic.FukidashiTE)[2], Names.ID).Replace("#", "\n");
+        }
     }
 
     // Update is called once per frame

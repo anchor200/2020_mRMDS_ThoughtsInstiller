@@ -28,6 +28,8 @@ public static class ConstantsDic
     // 画面に表示させる内容
     public static List<string[]> OnScreenTE;
 
+    // トピックの一覧
+    public static string[] Chosen_topics;
 
     public static List<string[]> ReadCSV(string filename)
     {
@@ -92,13 +94,31 @@ public static class ConstantsDic
     public static string FixTranscript(string Str, string ID)  // 文字列の置き換え
     {
         string[] mainClaimTemp;
+
+        string topic_id = "S";
+        switch (ID)
+        {
+            case "A":
+                topic_id = Chosen_topics[0];
+                break;
+            case "B":
+                topic_id = Chosen_topics[1];
+                break;
+            case "C":
+                topic_id = Chosen_topics[2];
+                break;
+            case "D":
+                topic_id = Chosen_topics[3];
+                break;
+        }
+
         mainClaimTemp = ConstantsDic.mainClaims[0];
         foreach (string[] c in ConstantsDic.mainClaims)
         {
-            if (c[0] == ID)
+            if (c[0] == topic_id)
             {
                 // Debug.Log("Find your claim for ID:" + ID);
-                mainClaimTemp = c;  // cは{話者ID,<MainClaim>,<Argument>,<Point>,<Relation>}
+                mainClaimTemp = c;  // cは{ID,<Topic>,<MainClaim>,<Argument>,}
                 break;
             }
         }

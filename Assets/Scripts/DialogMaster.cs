@@ -21,7 +21,7 @@ public class DialogMaster : MonoBehaviour
     public static int SceneNum = 0; // どのシーンにいるのか
     public static int SequenceTENum = 1; // 今シーンTEでどの遷移状態にいるのか
 
-    public static List<GameObject> SeqContainer = new List<GameObject>();
+    public GameObject nextPanel;
 
     // シーンの初期設定**>
 
@@ -29,16 +29,23 @@ public class DialogMaster : MonoBehaviour
     void Start()
     {
         // <**まずresources以下にあるcsvファイルをすべて読み込む  あとでPCの方だけに変えておこう
-        ConstantsDic.commUNetworkSettings = ConstantsDic.ReadCSV("PRESET/network_setting");
+        //ConstantsDic.commUNetworkSettings = ConstantsDic.ReadCSV("PRESET/network_setting");
         ConstantsDic.MNetworkSettings = ConstantsDic.ReadCSV("PRESET/network_to_M");
 
         // 発話の読み込み
-        ConstantsDic.mainClaims = ConstantsDic.ReadCSV("LOVE/main_claims");
+        ConstantsDic.mainClaims = ConstantsDic.ReadCSV("TOPICS/main_claims");
         ConstantsDic.SequenceTE = ConstantsDic.ReadCSV("PRESET/001_te_sequence");
         ConstantsDic.TranScriptST = ConstantsDic.ReadCSV("PRESET/000_st");
         ConstantsDic.TranScriptTE = ConstantsDic.ReadCSV("PRESET/001_te");
         ConstantsDic.OnScreenTE = ConstantsDic.ReadCSV("PRESET/001_te_onScreen");
         ConstantsDic.FukidashiTE = ConstantsDic.ReadCSV("PRESET/001_te_Fukidashi");
+
+
+        string path = "chosen_topics.txt";
+        Debug.Log("loading topics " + path);
+        List<string[]> tmp = ChoiceImport.ReadCSVFromOutOfBuild(path);
+
+        ConstantsDic.Chosen_topics = tmp[0];
 
         // まずresources以下にあるcsvファイルをすべて読み込む**>
 
@@ -89,7 +96,7 @@ public class DialogMaster : MonoBehaviour
 
                 if (k == 0)
                 {
-                    mainclaimer += "<ID>,<MainClaim>,<Argument>,<Point>,<Relation>;";
+                    mainclaimer += "ID,<Topic>,<MainClaim>,<Argument>;";
                 }
                 else
                 {
@@ -114,13 +121,13 @@ public class DialogMaster : MonoBehaviour
 
 
             // TE01以外を隠す
-            int i = 0;
+            /*int i = 0;
             GameObject g;
             foreach (string[] seq in ConstantsDic.SequenceTE)
             {
                 if (i == 0)
                 {
-                    g = GameObject.Find("OpinionInputField");
+                    g = GameObject.Find("OpinionInputField");  //コンテナの０がインプットフィールドになってる
                     SeqContainer.Add(g);
                     i++;
                     continue;
@@ -131,7 +138,8 @@ public class DialogMaster : MonoBehaviour
                 i++;
             }
             // TE01だけアクティブにする！
-            SeqContainer[SequenceTENum].SetActive(true);
+            SeqContainer[SequenceTENum].SetActive(true);*/
+            nextPanel.SetActive(true);
 
 
         }
@@ -173,7 +181,15 @@ public class DialogMaster : MonoBehaviour
         SceneDrawer.IsInConfirmation = false;
         string seqInputInfo = ConstantsDic.SequenceTE[SequenceTENum][2];
         string seqProceedInfo = ConstantsDic.SequenceTE[SequenceTENum][1];
-        SeqContainer[SequenceTENum].SetActive(false);
+        //SeqContainer[SequenceTENum].SetActive(false);  // 古いシーンを切る
+        if (SequenceTENum == 1)
+        {
+            nextPanel.SetActive(false);
+        }
+        else if (SequenceTENum == 6)
+        {
+            nextPanel.SetActive(true);
+        }
 
         // 進むボタンを押したときにシーンを更新する、文章を描画しなおす、選択肢ボタンを配置しなおす
         Debug.Log("Now we are:" + Scenes[SceneNum] + SequenceTENum.ToString("D2"));
@@ -182,7 +198,7 @@ public class DialogMaster : MonoBehaviour
         {
             SequenceTENum++;
             choiceControl.PlaceChoice(Scenes[SceneNum], SequenceTENum);
-            SeqContainer[SequenceTENum].SetActive(true);
+            //SeqContainer[SequenceTENum].SetActive(true);
 
             sceneDrawer.SetText();
 
@@ -230,5 +246,6 @@ public class DialogMaster : MonoBehaviour
     {
         // 確認ウィンドウで、修正をすることにした場合
         SceneDrawer.IsInConfirmation = false;
+        sceneDrawer.SetText();
     }
 }
