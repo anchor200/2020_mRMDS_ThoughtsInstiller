@@ -481,13 +481,13 @@ ScriptsOnlyBuild:
     className: RawImage
   - hash:
       serializedVersion: 2
-      Hash: b8a646f51ab0f6616296e61c5ad15d16
+      Hash: 405aacefc18a889efdd617762e136f9e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: SceneDrawer
   - hash:
       serializedVersion: 2
-      Hash: 49bb43165b258896e1eee83f6a412295
+      Hash: 5d464b38fca03be019ff1d3efa944584
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: DialogMaster
