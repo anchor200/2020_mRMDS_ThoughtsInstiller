@@ -54,6 +54,8 @@ public class ChoiceControl : MonoBehaviour
 
         choiceTransform = ChoiceField.transform;
         choiceTransform.DetachChildren();  // 過去の子供を全員抹消
+        if (ChoiceImport.CurrentChoice[0][0] == "nashi")
+            return;
         foreach (string[] choice in ChoiceImport.CurrentChoice)
         {
             //プレハブからボタンを生成

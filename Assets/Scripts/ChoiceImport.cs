@@ -31,7 +31,7 @@ public static class ChoiceImport
         }
         catch (Exception e)
         {
-            string[] err = { "われ思う、故に我在り。" };
+            string[] err = {"nashi"};
             tempList.Add(err);
         }
 

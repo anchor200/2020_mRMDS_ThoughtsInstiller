@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Sockets;
@@ -71,7 +72,7 @@ public class DialogMaster : MonoBehaviour
         }*/
 
 
-        //TcpClientを作成し、サーバーと接続
+        // TcpClientを作成し、サーバーと接続
         try
         {
             tcp = new System.Net.Sockets.TcpClient(ipOrHost, port);
@@ -88,6 +89,36 @@ public class DialogMaster : MonoBehaviour
             Debug.Log("初期化:" + Scenes[SceneNum] + SequenceTENum.ToString("D2"));
 
             MessageSender("<ID>:" + Names.ID + "," + Names.YourName + "," + Names.RoboName);
+
+            // 実験処理用の処理用の処理！！！！！！！
+            if (ns.CanRead)
+            {
+                byte[] myReadBuffer = new byte[1024];
+                StringBuilder myCompleteMessage = new StringBuilder();
+                int numberOfBytesRead = 0;
+
+                // Incoming message may be larger than the buffer size.
+                do
+                {
+                    numberOfBytesRead = ns.Read(myReadBuffer, 0, myReadBuffer.Length);
+
+                    myCompleteMessage.AppendFormat("{0}", Encoding.ASCII.GetString(myReadBuffer, 0, numberOfBytesRead));
+
+                }
+                while (ns.DataAvailable);
+
+                // Print out the received message to the console.
+                Debug.Log("You received the following message : " +
+                                             myCompleteMessage);
+                ConstantsDic.Chosen_topics = myCompleteMessage.ToString().Split(',');
+            }
+            else
+            {
+                Debug.Log("Sorry.  You cannot read from this NetworkStream.");
+            }
+
+
+
 
             int k = 0;
             string mainclaimer = "<MainClaim>:";

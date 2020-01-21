@@ -41,7 +41,7 @@ public class InputControl : MonoBehaviour
 
     public void OnValueChange()
     {
-        LengthCount.text = TargetInputField.text.Length + "文字 (最小6字、最大120字)";
+        LengthCount.text = TargetInputField.text.Length + "文字 (最小4字、最大120字)";
     }
 
 }
