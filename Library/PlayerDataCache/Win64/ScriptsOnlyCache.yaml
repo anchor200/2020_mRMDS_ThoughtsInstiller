@@ -481,7 +481,7 @@ ScriptsOnlyBuild:
     className: RawImage
   - hash:
       serializedVersion: 2
-      Hash: 405aacefc18a889efdd617762e136f9e
+      Hash: f98970668c3fdd28de1c03e5969539d9
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: SceneDrawer

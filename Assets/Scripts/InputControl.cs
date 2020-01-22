@@ -36,12 +36,12 @@ public class InputControl : MonoBehaviour
         // 確認ウィンドウを出す。
         SceneDrawer.IsInConfirmation = true;
         sceneDrawer.SetText();
-        TextToConfirm.text = TargetInputField.text;
+        TextToConfirm.text = ConstantsDic.FixTranscript(SceneDrawer.SearchFukidashi("TE" + DialogMaster.SequenceTENum.ToString("D2"), ConstantsDic.OnScreenTE)[1], Names.ID).Replace("#", "\n") + TargetInputField.text;
     }
 
     public void OnValueChange()
     {
-        LengthCount.text = TargetInputField.text.Length + "文字 (最小4字、最大120字)";
+        LengthCount.text = TargetInputField.text.Length + "文字 (最小4字、最大70字)";
     }
 
 }

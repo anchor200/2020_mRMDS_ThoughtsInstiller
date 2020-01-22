@@ -136,6 +136,7 @@ public static class ConstantsDic
             Str = Str.Replace(input[0], input[1]);
         }
 
+        Str = Str.Replace("#", "\n");
         Str = Str.Replace("<YourName>", Names.YourName).Replace("<RoboName>", Names.RoboName);
 
         //Str = Regex.Replace(Str, @"(?<=\G.{27}(?!$))|\n", "\n");//Environment.NewLine);

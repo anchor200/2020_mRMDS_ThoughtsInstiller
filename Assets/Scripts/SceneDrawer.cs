@@ -30,6 +30,7 @@ public class SceneDrawer : MonoBehaviour
     public Text textTE06no1;
     public Text textTE07no1;*/
     public Text Fukidashi;
+    public Text Prefix;
     //public Text FukidashiConfirm;
 
 
@@ -63,9 +64,11 @@ public class SceneDrawer : MonoBehaviour
         Fukidashi.text = ConstantsDic.FixTranscript(SearchFukidashi("TE" + DialogMaster.SequenceTENum.ToString("D2"), ConstantsDic.FukidashiTE)[1], Names.ID).Replace("#", "\n");
         FukidashiConfirm.text = ConstantsDic.FixTranscript(SearchFukidashi("TE" + DialogMaster.SequenceTENum.ToString("D2"), ConstantsDic.FukidashiTE)[2], Names.ID).Replace("#", "\n");*/
         Fukidashi.text = ConstantsDic.FixTranscript(ConstantsDic.SearchUtterance(Names.ID, DialogMaster.Scenes[DialogMaster.SceneNum], DialogMaster.SequenceTENum, ConstantsDic.TranScriptTE)[2], Names.ID).Replace("#", "\n");
+        Prefix.text = ConstantsDic.FixTranscript(SearchFukidashi("TE" + DialogMaster.SequenceTENum.ToString("D2"), ConstantsDic.OnScreenTE)[1], Names.ID).Replace("#", "\n");
+
         if (IsInConfirmation == true)
         {
-            if (TargetInputField.text.Length > 3 && TargetInputField.text.Length <= 120)
+            if (TargetInputField.text.Length > 3 && TargetInputField.text.Length <= 70)
                 Fukidashi.text = ConstantsDic.FixTranscript(SearchFukidashi("TE" + DialogMaster.SequenceTENum.ToString("D2"), ConstantsDic.FukidashiTE)[2], Names.ID).Replace("#", "\n");
         }
     }
@@ -84,7 +87,7 @@ public class SceneDrawer : MonoBehaviour
         {
             if (ConfirmWindow.activeSelf == false)
             {
-                if (TargetInputField.text.Length > 3 && TargetInputField.text.Length <= 120 )
+                if (TargetInputField.text.Length > 3 && TargetInputField.text.Length <= 70)
                 {
                     ConfirmWindow.SetActive(true);
                 }
@@ -119,7 +122,7 @@ public class SceneDrawer : MonoBehaviour
         return data[0];
     }
 
-    private string[] SearchFukidashi(string Sequence, List<string[]> data)
+    public static string[] SearchFukidashi(string Sequence, List<string[]> data)
     {
         foreach (string[] c in data)
         {
