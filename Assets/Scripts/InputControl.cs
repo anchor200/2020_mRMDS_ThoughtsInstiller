@@ -36,12 +36,25 @@ public class InputControl : MonoBehaviour
         // 確認ウィンドウを出す。
         SceneDrawer.IsInConfirmation = true;
         sceneDrawer.SetText();
-        TextToConfirm.text = ConstantsDic.FixTranscript(SceneDrawer.SearchFukidashi("TE" + DialogMaster.SequenceTENum.ToString("D2"), ConstantsDic.OnScreenTE)[1], Names.ID).Replace("#", "\n") + TargetInputField.text;
+        string temp = TargetInputField.text.Replace("\n", "").Replace(",", "、").Replace(";", "、").Replace(":", "。").Replace(" ", "").Replace("　", "、");
+        TextToConfirm.text = ConstantsDic.FixTranscript(SceneDrawer.SearchFukidashi("TE" + DialogMaster.SequenceTENum.ToString("D2"), ConstantsDic.OnScreenTE)[1], Names.ID).Replace("#", "\n") + temp;
     }
 
     public void OnValueChange()
     {
-        LengthCount.text = TargetInputField.text.Length + "文字 (最小4字、最大70字)";
+        if (TargetInputField.text.Length > int.Parse(ConstantsDic.SequenceTE[DialogMaster.SequenceTENum][3]))
+        {
+            LengthCount.text = TargetInputField.text.Length + "文字(" +ConstantsDic.SequenceTE[DialogMaster.SequenceTENum][3] + "字を超えています)";
+        }
+        else if(TargetInputField.text.Length < 4)
+        {
+            LengthCount.text = TargetInputField.text.Length + "文字(4字以下です)";
+        }
+        else
+        {
+            LengthCount.text = TargetInputField.text.Length + "文字 (最小4字、最大" + ConstantsDic.SequenceTE[DialogMaster.SequenceTENum][3] + "字)";
+        }
+
     }
 
 }

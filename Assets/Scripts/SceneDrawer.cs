@@ -68,7 +68,7 @@ public class SceneDrawer : MonoBehaviour
 
         if (IsInConfirmation == true)
         {
-            if (TargetInputField.text.Length > 3 && TargetInputField.text.Length <= 70)
+            if (TargetInputField.text.Length > 3 && TargetInputField.text.Length <= int.Parse(ConstantsDic.SequenceTE[DialogMaster.SequenceTENum][3]))
                 Fukidashi.text = ConstantsDic.FixTranscript(SearchFukidashi("TE" + DialogMaster.SequenceTENum.ToString("D2"), ConstantsDic.FukidashiTE)[2], Names.ID).Replace("#", "\n");
         }
     }
@@ -87,7 +87,7 @@ public class SceneDrawer : MonoBehaviour
         {
             if (ConfirmWindow.activeSelf == false)
             {
-                if (TargetInputField.text.Length > 3 && TargetInputField.text.Length <= 70)
+                if (TargetInputField.text.Length > 3 && TargetInputField.text.Length <= int.Parse(ConstantsDic.SequenceTE[DialogMaster.SequenceTENum][3]))
                 {
                     ConfirmWindow.SetActive(true);
                 }

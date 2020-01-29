@@ -1,8 +1,8 @@
-推移状態,終端かどうか,入力の名前
-TE01,False,
-TE02,False,<Example>
-TE03,False,<Detail>
-TE04,False,<Refute>
-TE05,False,<Rerefu>
-TE06,False,<Perspec>
-TE07,True,
+推移状態,終端かどうか,入力の名前,文字数
+TE01,False,,
+TE02,False,<Example>,70
+TE03,False,<Detail>,70
+TE04,False,<Refute>,70
+TE05,False,<Rerefu>,70
+TE06,False,<Perspec>,40
+TE07,True,,
